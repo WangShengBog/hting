@@ -16,7 +16,6 @@ def init(app):
     biz.init(app)
     api.init(app)
 
-    file_upload.init(app.config["MR_IMG_HTTP_BASE"], app.config["MR_IMG_PATH_BASE"])
-
+    # file_upload.init(app.config["MR_IMG_HTTP_BASE"], app.config["MR_IMG_PATH_BASE"])
     sql_execute.init(app)
 

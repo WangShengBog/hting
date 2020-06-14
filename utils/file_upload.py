@@ -55,9 +55,35 @@ def save_file(file, save_db=None, user=None):
                 "file_size": get_file_size(file_path),
                 "file_size_str": get_file_size_str(file_path)
             }
+            return save_db(data, user)
+        image_url = "{}/static/mr/{}/{}".format(http_base, date_str, file_path)
+        return 200, "", image_url
     except Exception as e:
         logger.error(e)
         return 500, "保存图片失败", None
+
+
+def save_image(body):
+    """
+    保存文件返回文件url
+    :param body: 文件内容字典,包括url, md5, ext, size等信息
+    :return: url
+    """
+    url = body.get("url", "")
+    ext = body.get("ext", "")
+    filename = rebuild_file_name(ext)
+    if url:
+        date_str = time.strftime("%Y%m%d")
+        base_path = os.path.join(path_base, "static", "im", date_str)
+        if not os.path.exists(base_path):
+            os.makedirs(base_path)
+        file_path = os.path.join(base_path, filename)
+        try:
+            urllib.request.urlretrieve(url, file_path)
+            url = "{}/static/im/{}/{}".format(http_base, date_str, filename)
+        except Exception as e:
+            logger.error(e)
+    return url
 
 
 def get_file_ext(filename):

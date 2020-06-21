@@ -47,7 +47,7 @@ def get_mongohandler(collection, db='mongolog', host='localhost', port=None,
 
 
 def configure_log(app):
-    logger.warning("app.debug={}, app.config['DEBUG']={}".format(str(app.debug), str(app.config.get("DEBUG"))))
+    logger.info("configuring log: app.debug={}, app.config['DEBUG']={}".format(str(app.debug), str(app.config.get("DEBUG"))))
     if app.debug:
         logging.basicConfig(level=logging.DEBUG, format=log_format)
     else:
@@ -74,6 +74,7 @@ def configure_log(app):
         root_logger.addHandler(info_handler)
 
         if app.logger:
+            root_logger.info("this is root_logger logging: app.logger is True, configuring app_logger.......")
             app.logger.setLevel(logging.INFO)
             app.logger.addHandler(error_handler)
             app.logger.addHandler(info_handler)

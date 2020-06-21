@@ -7,6 +7,7 @@ from werkzeug.exceptions import HTTPException
 
 from etc.config import config
 from utils.loggings import configure_log
+from src import init as init_framework
 
 __author__ = 'bog'
 

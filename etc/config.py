@@ -4,7 +4,9 @@ import logging
 
 __author__ = 'bog'
 
-base_dir = os.path.abspath(os.path.dirname(__file__))
+logger = logging.getLogger(__name__)
+
+project_base_dir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
 
 class Config(object):
@@ -16,13 +18,18 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') \
                               or "mysql+pymysql://root:123456@127.0.0.1:3306/ihospital?charset=utf8mb4"
     # 日志目录
-    LOG_FILEPATH = base_dir + r"/logs"
+    LOG_FILEPATH = project_base_dir + r"/logs/ht_log"
+
+    @staticmethod
+    def init_app(app):
+        pass
 
 
 class DevCfg(Config):
     """
     开发配置
     """
+    logger.info("configuring DevCfg...")
     pass
 
 
@@ -30,6 +37,7 @@ class ProdCfg(Config):
     """
     生产配置
     """
+    logger.info("configuring ProdCfg...")
     pass
 
 
@@ -41,4 +49,4 @@ config = {
 
 
 if __name__ == '__main__':
-    print(base_dir + r"\logs")
+    print(project_base_dir + r"\logs\ht_log")

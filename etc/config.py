@@ -39,6 +39,8 @@ class ProdCfg(Config):
     """
     logger.info("configuring ProdCfg...")
     pass
+    def init_app(app):
+        app.debug = False
 
 
 config = {
